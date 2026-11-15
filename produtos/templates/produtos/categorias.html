@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<section class="gerenciar-categorias">
+
+    <div class="categorias-cabecalho">
+        <span>ÁREA DO FUNCIONÁRIO</span>
+        <h1>Gerenciar categorias</h1>
+        <p>Organize as categorias dos produtos da confeitaria.</p>
+    </div>
+
+    <div class="categorias-conteudo">
+
+        <div class="categoria-formulario">
+
+            <h2>Nova categoria</h2>
+
+            <form>
+
+                <div class="form-group">
+                    <label for="nome">Nome da categoria</label>
+                    <input type="text" id="nome" placeholder="Ex.: Bolos">
+                </div>
+
+                <button type="submit" class="salvar-produto">
+                    Adicionar categoria
+                </button>
+
+            </form>
+
+        </div>
+
+        <div class="categorias-lista">
+
+            <h2>Categorias existentes</h2>
+
+            <div class="categoria-item">
+                <span>Bolos</span>
+                <button type="button">Editar</button>
+            </div>
+
+            <div class="categoria-item">
+                <span>Docinhos</span>
+                <button type="button">Editar</button>
+            </div>
+
+            <div class="categoria-item">
+                <span>Especiais</span>
+                <button type="button">Editar</button>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

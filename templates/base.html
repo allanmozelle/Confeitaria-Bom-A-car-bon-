@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="{% static 'img/favicon.png' %}">
+
+    <title>Confeitaria Bom Açúcar</title>
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
+<body>
+
+    <header>
+
+    <div class="logo">
+    <a href="/">
+        Confeitaria Bom Açúcar
+        <img src="{% static 'img/logo.png' %}" alt="Logo Confeitaria Bom Açúcar">
+    </a>
+    </div>
+    <nav>
+        <a href="/">Início</a>
+        <a href="/produtos/">Cardápio</a>
+        <a href="/pedidos/meus-pedidos/">Meus pedidos</a>
+        <a href="/pedidos/carrinho/">Carrinho</a>
+    </nav>
+
+</header>
+
+<main>
+
+    {% block content %}
+    {% endblock %}
+
+</main>
+
+<footer>
+
+    <p>&copy; 2026 Confeitaria Bom Açúcar. Todos os direitos reservados.</p>
+
+</footer>
+
+</body>
+</html>

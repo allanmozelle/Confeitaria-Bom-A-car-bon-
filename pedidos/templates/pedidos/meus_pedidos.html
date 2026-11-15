@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<section class="meus-pedidos">
+
+    <div class="pedidos-cabecalho">
+        <span>ACOMPANHE SUAS COMPRAS</span>
+        <h1>Meus pedidos</h1>
+        <p>Acompanhe seus pedidos e veja cada atualização.</p>
+    </div>
+
+    <div class="pedido-card">
+
+        <div class="pedido-topo">
+            <div>
+                <span>Pedido #001</span>
+                <p>Realizado em 15/11/2026</p>
+            </div>
+
+            <span class="pedido-status pendente">Pendente</span>
+        </div>
+
+        <div class="pedido-produtos">
+            <p>Bolo de Chocolate × 1</p>
+            <p>Cupcake Especial × 2</p>
+        </div>
+
+        <div class="pedido-rodape">
+            <strong>Total: R$ 61,00</strong>
+            <a href="/pedidos/1/" class="pedido-botao">Ver detalhes</a>
+        </div>
+
+    </div>
+
+    <div class="pedido-card">
+
+        <div class="pedido-topo">
+            <div>
+                <span>Pedido #002</span>
+                <p>Realizado em 12/11/2026</p>
+            </div>
+
+            <span class="pedido-status entregue">Entregue</span>
+        </div>
+
+        <div class="pedido-produtos">
+            <p>Torta de Morango × 1</p>
+        </div>
+
+        <div class="pedido-rodape">
+            <strong>Total: R$ 35,00</strong>
+            <a href="/pedidos/2/" class="pedido-botao">Ver detalhes</a>
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<section class="painel">
+
+    <div class="painel-cabecalho">
+        <span>ÁREA DO FUNCIONÁRIO</span>
+        <h1>Painel de gerenciamento</h1>
+        <p>Acompanhe os pedidos recebidos pela confeitaria.</p>
+    </div>
+
+    <div class="painel-resumo">
+
+        <div class="painel-resumo-card">
+            <span>Pedidos pendentes</span>
+            <strong>05</strong>
+        </div>
+
+        <div class="painel-resumo-card">
+            <span>Em preparação</span>
+            <strong>03</strong>
+        </div>
+
+        <div class="painel-resumo-card">
+            <span>Pedidos concluídos</span>
+            <strong>12</strong>
+        </div>
+
+    </div>
+
+    <div class="painel-pedidos">
+
+        <h2>Pedidos recentes</h2>
+
+        <div class="painel-pedido">
+
+            <div>
+                <strong>Pedido #001</strong>
+                <p>Cliente: Maria Silva</p>
+                <span class="pedido-status pendente">Pendente</span>
+            </div>
+
+            <a href="/pedidos/1/" class="pedido-botao">Ver pedido</a>
+
+        </div>
+
+        <div class="painel-pedido">
+
+            <div>
+                <strong>Pedido #002</strong>
+                <p>Cliente: João Santos</p>
+                <span class="pedido-status entregue">Entregue</span>
+            </div>
+
+            <a href="/pedidos/2/" class="pedido-botao">Ver pedido</a>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

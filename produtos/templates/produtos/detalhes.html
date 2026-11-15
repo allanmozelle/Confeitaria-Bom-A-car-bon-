@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<section class="detalhes-produto">
+
+    <div class="detalhes-imagem">
+        🍰
+    </div>
+
+    <div class="detalhes-info">
+
+        <span class="produto-categoria">BOLOS</span>
+
+        <h1>Bolo de Chocolate</h1>
+
+        <p class="detalhes-descricao">
+            Um delicioso bolo de chocolate, preparado com ingredientes
+            selecionados e uma cobertura cremosa.
+        </p>
+
+        <strong class="detalhes-preco">R$ 45,00</strong>
+
+        <div class="detalhes-quantidade">
+            <label for="quantidade">Quantidade:</label>
+            <input type="number" id="quantidade" min="1" value="1">
+        </div>
+
+        <button class="detalhes-botao">Adicionar ao carrinho</button>
+
+        <a href="/produtos/" class="voltar-cardapio">Voltar ao cardápio</a>
+
+    </div>
+
+</section>
+
+{% endblock %}

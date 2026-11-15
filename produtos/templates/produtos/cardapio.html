@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<section class="cardapio">
+
+    <div class="cardapio-cabecalho">
+        <span>NOSSAS DELÍCIAS</span>
+        <h1>Nosso Cardápio</h1>
+        <p>Explore nossos produtos e encontre seu próximo doce favorito.</p>
+    </div>
+
+    <div class="cardapio-filtros">
+        <button class="filtro ativo">Todos</button>
+        <button class="filtro">Bolos</button>
+        <button class="filtro">Docinhos</button>
+        <button class="filtro">Especiais</button>
+    </div>
+
+    <div class="produtos-container">
+
+        <div class="produto-card">
+            <div class="produto-imagem">🍰</div>
+            <div class="produto-info">
+                <span class="produto-categoria">Bolos</span>
+                <h3>Bolo de Chocolate</h3>
+                <p>Uma combinação deliciosa de chocolate e cremosidade.</p>
+                <div class="produto-rodape">
+                    <strong>R$ 45,00</strong>
+                    <a href="#" class="produto-botao">Ver detalhes</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="produto-card">
+            <div class="produto-imagem">🧁</div>
+            <div class="produto-info">
+                <span class="produto-categoria">Docinhos</span>
+                <h3>Cupcake Especial</h3>
+                <p>Massa macia com cobertura cremosa.</p>
+                <div class="produto-rodape">
+                    <strong>R$ 8,00</strong>
+                    <a href="#" class="produto-botao">Ver detalhes</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="produto-card">
+            <div class="produto-imagem">🍓</div>
+            <div class="produto-info">
+                <span class="produto-categoria">Especiais</span>
+                <h3>Torta de Morango</h3>
+                <p>Uma sobremesa delicada com morangos frescos.</p>
+                <div class="produto-rodape">
+                    <strong>R$ 35,00</strong>
+                    <a href="#" class="produto-botao">Ver detalhes</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}
