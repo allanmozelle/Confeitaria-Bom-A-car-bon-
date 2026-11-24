@@ -10,52 +10,62 @@
         <p>Acompanhe os pedidos recebidos pela confeitaria.</p>
     </div>
 
+    <div class="acoes-funcionario">
+        <a href="{% url 'produtos:cadastrar' %}" class="produto-botao">+ Cadastrar produto</a>
+        <a href="{% url 'produtos:categorias' %}" class="produto-botao">Gerenciar categorias</a>
+        <a href="{% url 'produtos:cardapio' %}" class="produto-botao">Ver cardápio</a>
+    </div>
+
     <div class="painel-resumo">
 
         <div class="painel-resumo-card">
             <span>Pedidos pendentes</span>
-            <strong>05</strong>
+            <strong>{{ resumo.pendentes }}</strong>
         </div>
 
         <div class="painel-resumo-card">
-            <span>Em preparação</span>
-            <strong>03</strong>
+            <span>Confirmados</span>
+            <strong>{{ resumo.confirmados }}</strong>
+        </div>
+
+        <div class="painel-resumo-card">
+            <span>Em preparo</span>
+            <strong>{{ resumo.em_preparo }}</strong>
         </div>
 
         <div class="painel-resumo-card">
             <span>Pedidos concluídos</span>
-            <strong>12</strong>
+            <strong>{{ resumo.concluidos }}</strong>
         </div>
 
     </div>
 
     <div class="painel-pedidos">
 
-        <h2>Pedidos recentes</h2>
+        <h2>Pedidos {% if filtro %}filtrados{% else %}recentes{% endif %}</h2>
 
+        <div class="cardapio-filtros painel-filtros">
+            <a href="{% url 'pedidos:painel' %}" class="filtro {% if not filtro %}ativo{% endif %}">Todos</a>
+            {% for valor, nome in opcoes_status %}
+            <a href="?status={{ valor }}" class="filtro {% if filtro == valor %}ativo{% endif %}">{{ nome }}</a>
+            {% endfor %}
+        </div>
+
+        {% for pedido in pedidos %}
         <div class="painel-pedido">
 
             <div>
-                <strong>Pedido #001</strong>
-                <p>Cliente: Maria Silva</p>
-                <span class="pedido-status pendente">Pendente</span>
+                <strong>Pedido #{{ pedido.codigo }}</strong>
+                <p>Cliente: {{ pedido.cliente.nome_completo }} · {{ pedido.data|date:"d/m/Y H:i" }} · R$ {{ pedido.valor_total|floatformat:2 }}</p>
+                <span class="pedido-status {{ pedido.classe_status }}">{{ pedido.get_status_display }}</span>
             </div>
 
-            <a href="/pedidos/1/" class="pedido-botao">Ver pedido</a>
+            <a href="{% url 'pedidos:detalhes' pedido.id %}" class="pedido-botao">Ver pedido</a>
 
         </div>
-
-        <div class="painel-pedido">
-
-            <div>
-                <strong>Pedido #002</strong>
-                <p>Cliente: João Santos</p>
-                <span class="pedido-status entregue">Entregue</span>
-            </div>
-
-            <a href="/pedidos/2/" class="pedido-botao">Ver pedido</a>
-
-        </div>
+        {% empty %}
+        <p class="lista-vazia">Nenhum pedido encontrado.</p>
+        {% endfor %}
 
     </div>
 

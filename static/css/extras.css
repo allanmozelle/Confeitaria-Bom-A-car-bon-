@@ -1,0 +1,278 @@
+/* ==========================================================
+   EXTRAS — estilos dos elementos que passaram a existir quando
+   o sistema ficou dinâmico (mensagens, erros, botões de ação...).
+   Mantém as mesmas cores do style.css.
+   ========================================================== */
+
+/* MENSAGENS (sucesso, erro, aviso) */
+
+.mensagens {
+    list-style: none;
+    max-width: 900px;
+    margin: 0 auto 30px;
+}
+
+.mensagem {
+    padding: 14px 18px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    font-size: 14px;
+    font-weight: bold;
+    border: 1px solid transparent;
+}
+
+.mensagem.success { background-color: #DDF3E4; color: #368052; border-color: #BFE3CB; }
+.mensagem.error   { background-color: #FBE0E0; color: #B03A3A; border-color: #F1C3C3; }
+.mensagem.warning { background-color: #FFF0D6; color: #A66B18; border-color: #F2DBA9; }
+.mensagem.info    { background-color: #E0ECFA; color: #2F5F9B; border-color: #C3D8F1; }
+
+/* ERROS DE FORMULÁRIO */
+
+.erro-campo {
+    color: #B03A3A;
+    font-size: 13px;
+    margin-top: 6px;
+}
+
+.form-group select,
+.form-group textarea {
+    padding: 13px;
+    border: 1px solid #E8D5D8;
+    border-radius: 9px;
+    outline: none;
+    font-size: 15px;
+    font-family: Arial, sans-serif;
+    background-color: #FFFFFF;
+    color: #684B45;
+}
+
+.form-group input[readonly] {
+    background-color: #FBF3F0;
+    color: #8B7772;
+}
+
+.form-check label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+}
+
+.form-check input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    padding: 0;
+}
+
+/* MENU: botão "Sair" com cara de link */
+
+.form-sair {
+    display: inline;
+}
+
+.nav-sair {
+    background: none;
+    border: 1px solid #C96F91;
+    color: #C96F91;
+    padding: 7px 16px;
+    border-radius: 20px;
+    font-size: 14px;
+    transition: 0.3s;
+}
+
+.nav-sair:hover {
+    background-color: #C96F91;
+    color: #FFFFFF;
+}
+
+nav {
+    flex-wrap: wrap;
+}
+
+/* BOAS-VINDAS DA PÁGINA INICIAL */
+
+.boas-vindas {
+    font-weight: bold;
+    color: #C96F91;
+}
+
+/* STATUS DOS PEDIDOS (pendente e entregue já existem no style.css) */
+
+.confirmado { background-color: #E0ECFA; color: #2F5F9B; }
+.em-preparo { background-color: #F8DDE5; color: #A8486B; }
+.pronto     { background-color: #E3F4F2; color: #2F7F78; }
+.cancelado  { background-color: #FBE0E0; color: #B03A3A; }
+
+/* IMAGENS DOS PRODUTOS */
+
+.produto-imagem,
+.detalhes-imagem,
+.carrinho-item-imagem {
+    overflow: hidden;
+}
+
+.produto-imagem img,
+.detalhes-imagem img,
+.carrinho-item-imagem img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.detalhes-imagem img {
+    min-height: 280px;
+}
+
+.imagem-atual {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 12px;
+    margin-bottom: 10px;
+}
+
+/* PRODUTO INDISPONÍVEL */
+
+.indisponivel {
+    opacity: 0.6;
+}
+
+.selo-indisponivel {
+    display: inline-block;
+    background-color: #FBE0E0;
+    color: #B03A3A;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 5px 12px;
+    border-radius: 20px;
+    margin: 8px 0;
+}
+
+/* BOTÕES DE AÇÃO (funcionário) */
+
+.acoes-funcionario {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 30px;
+}
+
+.produto-acoes,
+.categoria-acoes,
+.pedido-admin-acoes {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+}
+
+.produto-acoes {
+    margin-top: 14px;
+}
+
+.botao-pequeno {
+    display: inline-block;
+    background-color: #FFFFFF;
+    color: #C96F91;
+    border: 1px solid #C96F91;
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.botao-pequeno:hover {
+    background-color: #C96F91;
+    color: #FFFFFF;
+}
+
+.botao-pequeno.perigo {
+    color: #B03A3A;
+    border-color: #B03A3A;
+}
+
+.botao-pequeno.perigo:hover {
+    background-color: #B03A3A;
+    color: #FFFFFF;
+}
+
+.voltar-cardapio {
+    display: inline-block;
+    margin-top: 15px;
+}
+
+/* DETALHES DO PEDIDO — área do funcionário */
+
+.pedido-admin {
+    border-top: 1px solid #E8D5D8;
+    margin-top: 25px;
+    padding-top: 20px;
+    margin-bottom: 25px;
+}
+
+.pedido-admin h3 {
+    margin-bottom: 14px;
+}
+
+.pedido-admin-status {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    margin-top: 14px;
+}
+
+.pedido-admin-status select {
+    padding: 9px;
+    border: 1px solid #E8D5D8;
+    border-radius: 8px;
+    background-color: #FFFFFF;
+    color: #684B45;
+}
+
+.pedido-admin .pedido-botao {
+    border: none;
+}
+
+/* PAINEL: 4 cartões de resumo e filtros */
+
+.painel-resumo {
+    grid-template-columns: repeat(4, 1fr);
+}
+
+.painel-filtros {
+    justify-content: flex-start;
+    margin: 20px 0;
+}
+
+@media (max-width: 900px) {
+    .painel-resumo { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 600px) {
+    .painel-resumo { grid-template-columns: 1fr; }
+}
+
+/* ESTADOS VAZIOS */
+
+.lista-vazia,
+.carrinho-vazio {
+    text-align: center;
+    color: #8B7772;
+    padding: 30px 0;
+    grid-column: 1 / -1;
+}
+
+.carrinho-vazio p {
+    margin-bottom: 18px;
+}
+
+.carrinho-item form {
+    margin: 0;
+}
+
+.carrinho-item-quantidade input {
+    width: 80px;
+}

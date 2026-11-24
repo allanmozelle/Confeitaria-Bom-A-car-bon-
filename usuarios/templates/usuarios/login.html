@@ -10,16 +10,24 @@
 
         <p>Entre na sua conta para continuar.</p>
 
-        <form>
+        <form method="post">
+            {% csrf_token %}
+            <input type="hidden" name="next" value="{{ next }}">
+
+            {% for erro in form.non_field_errors %}
+                <p class="erro-campo">{{ erro }}</p>
+            {% endfor %}
 
             <div class="form-group">
-                <label for="usuario">Usuário ou e-mail</label>
-                <input type="text" id="usuario" placeholder="Digite seu usuário ou e-mail">
+                <label for="{{ form.username.id_for_label }}">Usuário ou e-mail</label>
+                {{ form.username }}
+                {% for erro in form.username.errors %}<p class="erro-campo">{{ erro }}</p>{% endfor %}
             </div>
 
             <div class="form-group">
-                <label for="senha">Senha</label>
-                <input type="password" id="senha" placeholder="Digite sua senha">
+                <label for="{{ form.password.id_for_label }}">Senha</label>
+                {{ form.password }}
+                {% for erro in form.password.errors %}<p class="erro-campo">{{ erro }}</p>{% endfor %}
             </div>
 
             <button type="submit">Entrar</button>
@@ -28,7 +36,7 @@
 
         <p class="cadastro-link">
             Ainda não tem uma conta?
-            <a href="{% url 'cadastro' %}">Cadastre-se</a>
+            <a href="{% url 'usuarios:cadastro' %}">Cadastre-se</a>
         </p>
 
     </div>

@@ -9,12 +9,14 @@
 
         <h1>Um doce momento começa aqui.</h1>
 
+        <p class="boas-vindas">Olá, {{ user.get_short_name }}! Seja bem-vindo(a).</p>
+
         <p>
             Descubra sabores especiais e encontre o doce perfeito
             para deixar seu dia ainda mais gostoso.
         </p>
 
-        <a href="/produtos/" class="home-button">Ver cardápio</a>
+        <a href="{% url 'produtos:cardapio' %}" class="home-button">Ver cardápio</a>
     </div>
 
 </section>

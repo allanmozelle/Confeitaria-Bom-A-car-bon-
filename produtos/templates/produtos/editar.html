@@ -12,35 +12,46 @@
 
     <div class="editar-produto-card">
 
-        <form>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            {% for erro in form.non_field_errors %}<p class="erro-campo">{{ erro }}</p>{% endfor %}
 
             <div class="form-group">
-                <label for="nome">Nome do produto</label>
-                <input type="text" id="nome" value="Bolo de Chocolate">
+                <label for="{{ form.nome.id_for_label }}">Nome do produto</label>
+                {{ form.nome }}
+                {% for erro in form.nome.errors %}<p class="erro-campo">{{ erro }}</p>{% endfor %}
             </div>
 
             <div class="form-group">
-                <label for="categoria">Categoria</label>
-                <select id="categoria">
-                    <option value="bolos" selected>Bolos</option>
-                    <option value="docinhos">Docinhos</option>
-                    <option value="especiais">Especiais</option>
-                </select>
+                <label for="{{ form.categoria.id_for_label }}">Categoria</label>
+                {{ form.categoria }}
+                {% for erro in form.categoria.errors %}<p class="erro-campo">{{ erro }}</p>{% endfor %}
             </div>
 
             <div class="form-group">
-                <label for="descricao">Descrição</label>
-                <textarea id="descricao" rows="4">Um delicioso bolo de chocolate, preparado com ingredientes selecionados.</textarea>
+                <label for="{{ form.descricao.id_for_label }}">Descrição</label>
+                {{ form.descricao }}
+                {% for erro in form.descricao.errors %}<p class="erro-campo">{{ erro }}</p>{% endfor %}
             </div>
 
             <div class="form-group">
-                <label for="preco">Preço</label>
-                <input type="number" id="preco" value="45.00" step="0.01">
+                <label for="{{ form.preco.id_for_label }}">Preço</label>
+                {{ form.preco }}
+                {% for erro in form.preco.errors %}<p class="erro-campo">{{ erro }}</p>{% endfor %}
             </div>
 
             <div class="form-group">
-                <label for="imagem">Alterar imagem</label>
-                <input type="file" id="imagem" accept="image/*">
+                <label for="{{ form.imagem.id_for_label }}">Alterar imagem</label>
+                {% if produto.imagem %}
+                    <img src="{{ produto.imagem.url }}" alt="{{ produto.nome }}" class="imagem-atual">
+                {% endif %}
+                {{ form.imagem }}
+                {% for erro in form.imagem.errors %}<p class="erro-campo">{{ erro }}</p>{% endfor %}
+            </div>
+
+            <div class="form-group form-check">
+                <label>{{ form.disponivel }} Produto disponível para pedidos</label>
             </div>
 
             <button type="submit" class="salvar-produto">
@@ -48,6 +59,8 @@
             </button>
 
         </form>
+
+        <a href="{% url 'produtos:cardapio' %}" class="voltar-cardapio">Cancelar</a>
 
     </div>
 

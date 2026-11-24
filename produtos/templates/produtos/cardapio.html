@@ -10,53 +10,68 @@
         <p>Explore nossos produtos e encontre seu próximo doce favorito.</p>
     </div>
 
+    {% if user.eh_funcionario %}
+    <div class="acoes-funcionario">
+        <a href="{% url 'produtos:cadastrar' %}" class="produto-botao">+ Cadastrar produto</a>
+        <a href="{% url 'produtos:categorias' %}" class="produto-botao">Gerenciar categorias</a>
+    </div>
+    {% endif %}
+
     <div class="cardapio-filtros">
-        <button class="filtro ativo">Todos</button>
-        <button class="filtro">Bolos</button>
-        <button class="filtro">Docinhos</button>
-        <button class="filtro">Especiais</button>
+        <a href="{% url 'produtos:cardapio' %}" class="filtro {% if not categoria_atual %}ativo{% endif %}">Todos</a>
+        {% for categoria in categorias %}
+        <a href="?categoria={{ categoria.id }}" class="filtro {% if categoria_atual == categoria.id %}ativo{% endif %}">{{ categoria.nome }}</a>
+        {% endfor %}
     </div>
 
     <div class="produtos-container">
 
-        <div class="produto-card">
-            <div class="produto-imagem">🍰</div>
-            <div class="produto-info">
-                <span class="produto-categoria">Bolos</span>
-                <h3>Bolo de Chocolate</h3>
-                <p>Uma combinação deliciosa de chocolate e cremosidade.</p>
-                <div class="produto-rodape">
-                    <strong>R$ 45,00</strong>
-                    <a href="#" class="produto-botao">Ver detalhes</a>
-                </div>
+        {% for produto in produtos %}
+        <div class="produto-card {% if not produto.disponivel %}indisponivel{% endif %}">
+            <div class="produto-imagem">
+                {% if produto.imagem %}
+                    <img src="{{ produto.imagem.url }}" alt="{{ produto.nome }}">
+                {% else %}
+                    🍰
+                {% endif %}
             </div>
-        </div>
+            <div class="produto-info">
+                <span class="produto-categoria">{{ produto.categoria.nome }}</span>
+                <h3>{{ produto.nome }}</h3>
+                <p>{{ produto.descricao|truncatechars:90 }}</p>
 
-        <div class="produto-card">
-            <div class="produto-imagem">🧁</div>
-            <div class="produto-info">
-                <span class="produto-categoria">Docinhos</span>
-                <h3>Cupcake Especial</h3>
-                <p>Massa macia com cobertura cremosa.</p>
-                <div class="produto-rodape">
-                    <strong>R$ 8,00</strong>
-                    <a href="#" class="produto-botao">Ver detalhes</a>
-                </div>
-            </div>
-        </div>
+                {% if not produto.disponivel %}
+                    <span class="selo-indisponivel">Indisponível</span>
+                {% endif %}
 
-        <div class="produto-card">
-            <div class="produto-imagem">🍓</div>
-            <div class="produto-info">
-                <span class="produto-categoria">Especiais</span>
-                <h3>Torta de Morango</h3>
-                <p>Uma sobremesa delicada com morangos frescos.</p>
                 <div class="produto-rodape">
-                    <strong>R$ 35,00</strong>
-                    <a href="#" class="produto-botao">Ver detalhes</a>
+                    <strong>R$ {{ produto.preco|floatformat:2 }}</strong>
+                    <a href="{% url 'produtos:detalhes' produto.id %}" class="produto-botao">Ver detalhes</a>
                 </div>
+
+                {% if user.eh_funcionario %}
+                <div class="produto-acoes">
+                    <a href="{% url 'produtos:editar' produto.id %}" class="botao-pequeno">Editar</a>
+
+                    <form method="post" action="{% url 'produtos:disponibilidade' produto.id %}">
+                        {% csrf_token %}
+                        <button type="submit" class="botao-pequeno">
+                            {% if produto.disponivel %}Marcar indisponível{% else %}Marcar disponível{% endif %}
+                        </button>
+                    </form>
+
+                    <form method="post" action="{% url 'produtos:excluir' produto.id %}"
+                          onsubmit="return confirm('Excluir o produto {{ produto.nome|escapejs }}?');">
+                        {% csrf_token %}
+                        <button type="submit" class="botao-pequeno perigo">Excluir</button>
+                    </form>
+                </div>
+                {% endif %}
             </div>
         </div>
+        {% empty %}
+        <p class="lista-vazia">Nenhum produto encontrado nesta categoria.</p>
+        {% endfor %}
 
     </div>
 

@@ -7,50 +7,91 @@
     <div class="detalhes-pedido-cabecalho">
         <span>ACOMPANHAMENTO</span>
         <h1>Detalhes do pedido</h1>
-        <p>Confira as informações da sua compra.</p>
+        <p>Confira as informações {% if user.eh_funcionario %}do pedido{% else %}da sua compra{% endif %}.</p>
     </div>
 
     <div class="detalhes-pedido-card">
 
         <div class="detalhes-pedido-topo">
             <div>
-                <h2>Pedido #001</h2>
-                <p>Realizado em 15/11/2026</p>
+                <h2>Pedido #{{ pedido.codigo }}</h2>
+                <p>Realizado em {{ pedido.data|date:"d/m/Y \à\s H:i" }}</p>
             </div>
 
-            <span class="pedido-status pendente">Pendente</span>
+            <span class="pedido-status {{ pedido.classe_status }}">{{ pedido.get_status_display }}</span>
         </div>
 
         <div class="detalhes-pedido-produtos">
 
             <h3>Produtos</h3>
 
+            {% for item in pedido.itens.all %}
             <div class="detalhe-produto">
-                <span>Bolo de Chocolate × 1</span>
-                <strong>R$ 45,00</strong>
+                <span>{{ item.nome_produto }} × {{ item.quantidade }}</span>
+                <strong>R$ {{ item.subtotal|floatformat:2 }}</strong>
             </div>
-
-            <div class="detalhe-produto">
-                <span>Cupcake Especial × 2</span>
-                <strong>R$ 16,00</strong>
-            </div>
+            {% endfor %}
 
         </div>
 
         <div class="detalhes-pedido-total">
             <span>Total do pedido</span>
-            <strong>R$ 61,00</strong>
+            <strong>R$ {{ pedido.valor_total|floatformat:2 }}</strong>
         </div>
 
         <div class="detalhes-pedido-entrega">
             <h3>Informações adicionais</h3>
-            <p><strong>Endereço:</strong> Rua Exemplo, 123</p>
-            <p><strong>Observações:</strong> Sem observações.</p>
+            {% if user.eh_funcionario %}
+                <p><strong>Cliente:</strong> {{ pedido.cliente.nome_completo }} ({{ pedido.cliente.email }})</p>
+            {% endif %}
+            <p><strong>Telefone:</strong> {{ pedido.telefone }}</p>
+            <p><strong>Endereço:</strong> {{ pedido.endereco }}</p>
+            <p><strong>Observações:</strong> {{ pedido.observacoes|default:"Sem observações." }}</p>
         </div>
 
-        <a href="/pedidos/meus-pedidos/" class="voltar-pedidos">
-            Voltar aos meus pedidos
-        </a>
+        {% if user.eh_funcionario %}
+        <div class="pedido-admin">
+            <h3>Atualizar pedido</h3>
+
+            <div class="pedido-admin-acoes">
+                {% if pedido.status == 'pendente' %}
+                <form method="post" action="{% url 'pedidos:alterar_status' pedido.id %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="status" value="confirmado">
+                    <button type="submit" class="pedido-botao">Confirmar pedido</button>
+                </form>
+                {% endif %}
+
+                {% if pedido.status != 'cancelado' and pedido.status != 'entregue' %}
+                <form method="post" action="{% url 'pedidos:alterar_status' pedido.id %}"
+                      onsubmit="return confirm('Cancelar este pedido?');">
+                    {% csrf_token %}
+                    <input type="hidden" name="status" value="cancelado">
+                    <button type="submit" class="botao-pequeno perigo">Cancelar pedido</button>
+                </form>
+                {% endif %}
+            </div>
+
+            <form method="post" action="{% url 'pedidos:alterar_status' pedido.id %}" class="pedido-admin-status">
+                {% csrf_token %}
+                <label for="status">Alterar status:</label>
+                <select name="status" id="status">
+                    {% for valor, nome in opcoes_status %}
+                    <option value="{{ valor }}" {% if valor == pedido.status %}selected{% endif %}>{{ nome }}</option>
+                    {% endfor %}
+                </select>
+                <button type="submit" class="pedido-botao">Salvar</button>
+            </form>
+        </div>
+        {% endif %}
+
+        {% if user.eh_funcionario %}
+            <a href="{% url 'pedidos:painel' %}" class="voltar-pedidos">Voltar ao painel</a>
+        {% else %}
+            <a href="{% url 'pedidos:meus_pedidos' %}" class="voltar-pedidos">
+                Voltar aos meus pedidos
+            </a>
+        {% endif %}
 
     </div>
 

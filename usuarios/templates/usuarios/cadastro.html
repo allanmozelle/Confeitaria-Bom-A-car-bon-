@@ -10,31 +10,41 @@
 
         <p>Faça seu cadastro para aproveitar nossas delícias!</p>
 
-        <form>
+        <form method="post">
+            {% csrf_token %}
+
+            {% for erro in form.non_field_errors %}
+                <p class="erro-campo">{{ erro }}</p>
+            {% endfor %}
 
             <div class="form-group">
-                <label for="nome">Nome completo</label>
-                <input type="text" id="nome" placeholder="Digite seu nome completo">
+                <label for="{{ form.nome_completo.id_for_label }}">Nome completo</label>
+                {{ form.nome_completo }}
+                {% for erro in form.nome_completo.errors %}<p class="erro-campo">{{ erro }}</p>{% endfor %}
             </div>
 
             <div class="form-group">
-                <label for="email">E-mail</label>
-                <input type="email" id="email" placeholder="Digite seu e-mail">
+                <label for="{{ form.email.id_for_label }}">E-mail</label>
+                {{ form.email }}
+                {% for erro in form.email.errors %}<p class="erro-campo">{{ erro }}</p>{% endfor %}
             </div>
 
             <div class="form-group">
-                <label for="usuario">Nome de usuário</label>
-                <input type="text" id="usuario" placeholder="Escolha um nome de usuário">
+                <label for="{{ form.username.id_for_label }}">Nome de usuário</label>
+                {{ form.username }}
+                {% for erro in form.username.errors %}<p class="erro-campo">{{ erro }}</p>{% endfor %}
             </div>
 
             <div class="form-group">
-                <label for="senha">Senha</label>
-                <input type="password" id="senha" placeholder="Crie uma senha">
+                <label for="{{ form.password1.id_for_label }}">Senha</label>
+                {{ form.password1 }}
+                {% for erro in form.password1.errors %}<p class="erro-campo">{{ erro }}</p>{% endfor %}
             </div>
 
             <div class="form-group">
-                <label for="confirmar-senha">Confirmar senha</label>
-                <input type="password" id="confirmar-senha" placeholder="Digite sua senha novamente">
+                <label for="{{ form.password2.id_for_label }}">Confirmar senha</label>
+                {{ form.password2 }}
+                {% for erro in form.password2.errors %}<p class="erro-campo">{{ erro }}</p>{% endfor %}
             </div>
 
             <button type="submit">Criar conta</button>
@@ -43,7 +53,7 @@
 
         <p class="login-link">
             Já possui uma conta?
-            <a href="{% url 'login' %}">Faça login</a>
+            <a href="{% url 'usuarios:login' %}">Faça login</a>
         </p>
 
     </div>

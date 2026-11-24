@@ -5,30 +5,55 @@
 <section class="detalhes-produto">
 
     <div class="detalhes-imagem">
-        🍰
+        {% if produto.imagem %}
+            <img src="{{ produto.imagem.url }}" alt="{{ produto.nome }}">
+        {% else %}
+            🍰
+        {% endif %}
     </div>
 
     <div class="detalhes-info">
 
-        <span class="produto-categoria">BOLOS</span>
+        <span class="produto-categoria">{{ produto.categoria.nome }}</span>
 
-        <h1>Bolo de Chocolate</h1>
+        <h1>{{ produto.nome }}</h1>
 
-        <p class="detalhes-descricao">
-            Um delicioso bolo de chocolate, preparado com ingredientes
-            selecionados e uma cobertura cremosa.
-        </p>
+        <p class="detalhes-descricao">{{ produto.descricao|linebreaksbr }}</p>
 
-        <strong class="detalhes-preco">R$ 45,00</strong>
+        <strong class="detalhes-preco">R$ {{ produto.preco|floatformat:2 }}</strong>
 
-        <div class="detalhes-quantidade">
-            <label for="quantidade">Quantidade:</label>
-            <input type="number" id="quantidade" min="1" value="1">
+        {% if not produto.disponivel %}
+            <span class="selo-indisponivel">Indisponível no momento</span>
+        {% endif %}
+
+        {% if user.eh_cliente and produto.disponivel %}
+        <form method="post" action="{% url 'pedidos:adicionar_carrinho' produto.id %}">
+            {% csrf_token %}
+
+            <div class="detalhes-quantidade">
+                <label for="quantidade">Quantidade:</label>
+                <input type="number" id="quantidade" name="quantidade" min="1" max="50" value="1">
+            </div>
+
+            <button type="submit" class="detalhes-botao">Adicionar ao carrinho</button>
+        </form>
+        {% endif %}
+
+        {% if user.eh_funcionario %}
+        <div class="produto-acoes">
+            <a href="{% url 'produtos:editar' produto.id %}" class="botao-pequeno">Editar produto</a>
+
+            <form method="post" action="{% url 'produtos:disponibilidade' produto.id %}">
+                {% csrf_token %}
+                <input type="hidden" name="voltar" value="detalhes">
+                <button type="submit" class="botao-pequeno">
+                    {% if produto.disponivel %}Marcar indisponível{% else %}Marcar disponível{% endif %}
+                </button>
+            </form>
         </div>
+        {% endif %}
 
-        <button class="detalhes-botao">Adicionar ao carrinho</button>
-
-        <a href="/produtos/" class="voltar-cardapio">Voltar ao cardápio</a>
+        <a href="{% url 'produtos:cardapio' %}" class="voltar-cardapio">Voltar ao cardápio</a>
 
     </div>
 

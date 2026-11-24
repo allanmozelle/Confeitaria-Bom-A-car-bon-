@@ -7,11 +7,17 @@ __pycache__/
 *.pyc
 *.py[cod]
 
-# Banco de dados local
-db.sqlite3
+# Bancos de dados locais
+*.sqlite3
 
 # Configurações locais
 .env
+.env.*
+!.env.example
+
+# Arquivos gerados e enviados
+staticfiles/
+media/
 
 # Arquivos do sistema
 .DS_Store

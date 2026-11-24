@@ -10,50 +10,36 @@
         <p>Acompanhe seus pedidos e veja cada atualização.</p>
     </div>
 
+    {% for pedido in pedidos %}
     <div class="pedido-card">
 
         <div class="pedido-topo">
             <div>
-                <span>Pedido #001</span>
-                <p>Realizado em 15/11/2026</p>
+                <span>Pedido #{{ pedido.codigo }}</span>
+                <p>Realizado em {{ pedido.data|date:"d/m/Y" }}</p>
             </div>
 
-            <span class="pedido-status pendente">Pendente</span>
+            <span class="pedido-status {{ pedido.classe_status }}">{{ pedido.get_status_display }}</span>
         </div>
 
         <div class="pedido-produtos">
-            <p>Bolo de Chocolate × 1</p>
-            <p>Cupcake Especial × 2</p>
+            {% for item in pedido.itens.all %}
+                <p>{{ item.nome_produto }} × {{ item.quantidade }}</p>
+            {% endfor %}
         </div>
 
         <div class="pedido-rodape">
-            <strong>Total: R$ 61,00</strong>
-            <a href="/pedidos/1/" class="pedido-botao">Ver detalhes</a>
+            <strong>Total: R$ {{ pedido.valor_total|floatformat:2 }}</strong>
+            <a href="{% url 'pedidos:detalhes' pedido.id %}" class="pedido-botao">Ver detalhes</a>
         </div>
 
     </div>
-
-    <div class="pedido-card">
-
-        <div class="pedido-topo">
-            <div>
-                <span>Pedido #002</span>
-                <p>Realizado em 12/11/2026</p>
-            </div>
-
-            <span class="pedido-status entregue">Entregue</span>
-        </div>
-
-        <div class="pedido-produtos">
-            <p>Torta de Morango × 1</p>
-        </div>
-
-        <div class="pedido-rodape">
-            <strong>Total: R$ 35,00</strong>
-            <a href="/pedidos/2/" class="pedido-botao">Ver detalhes</a>
-        </div>
-
+    {% empty %}
+    <div class="carrinho-vazio">
+        <p>Você ainda não fez nenhum pedido.</p>
+        <a href="{% url 'produtos:cardapio' %}" class="produto-botao">Ver cardápio</a>
     </div>
+    {% endfor %}
 
 </section>
 

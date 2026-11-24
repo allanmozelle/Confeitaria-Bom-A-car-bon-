@@ -9,6 +9,7 @@
     <title>Confeitaria Bom Açúcar</title>
 
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/extras.css' %}">
 </head>
 
 <body>
@@ -16,21 +17,51 @@
     <header>
 
     <div class="logo">
-    <a href="/">
+    <a href="{% url 'principal:home' %}">
         Confeitaria Bom Açúcar
         <img src="{% static 'img/logo.png' %}" alt="Logo Confeitaria Bom Açúcar">
     </a>
     </div>
+
     <nav>
-        <a href="/">Início</a>
-        <a href="/produtos/">Cardápio</a>
-        <a href="/pedidos/meus-pedidos/">Meus pedidos</a>
-        <a href="/pedidos/carrinho/">Carrinho</a>
+        {% if user.is_authenticated %}
+
+            <a href="{% url 'principal:home' %}">Início</a>
+            <a href="{% url 'produtos:cardapio' %}">Cardápio</a>
+
+            {% if user.eh_funcionario %}
+                <a href="{% url 'pedidos:painel' %}">Painel</a>
+                <a href="{% url 'produtos:categorias' %}">Categorias</a>
+                <a href="{% url 'produtos:cadastrar' %}">Novo produto</a>
+            {% else %}
+                <a href="{% url 'pedidos:meus_pedidos' %}">Meus pedidos</a>
+                <a href="{% url 'pedidos:carrinho' %}">Carrinho{% if carrinho_quantidade %} ({{ carrinho_quantidade }}){% endif %}</a>
+            {% endif %}
+
+            <form method="post" action="{% url 'usuarios:logout' %}" class="form-sair">
+                {% csrf_token %}
+                <button type="submit" class="nav-sair">Sair</button>
+            </form>
+
+        {% else %}
+
+            <a href="{% url 'usuarios:login' %}">Entrar</a>
+            <a href="{% url 'usuarios:cadastro' %}">Criar conta</a>
+
+        {% endif %}
     </nav>
 
 </header>
 
 <main>
+
+    {% if messages %}
+    <ul class="mensagens">
+        {% for message in messages %}
+        <li class="mensagem {{ message.tags }}">{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
 
     {% block content %}
     {% endblock %}
